@@ -46,7 +46,7 @@ app.post('/articles', function(request, response) {
     `
     INSERT INTO authors(author, "authorUrl")
     VALUES ($1, $2)
-    ON CONFLICT IGNORE;
+    ON CONFLICT DO NOTHING;
 
     `,
     [
@@ -63,9 +63,9 @@ app.post('/articles', function(request, response) {
     // TODO: Write a SQL query to retrieve the author_id from the authors table for the new article
     // TODO: Add the author name as data for the SQL query
     client.query(
-      `SELECT *
+      `SELECT authors_id
        FROM authors
-       WHERE authour = $1;
+       WHERE author = $1;
       `
       ,
       [request.body.author],
